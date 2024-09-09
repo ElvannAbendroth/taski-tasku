@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,34 +14,43 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`font-display antialiased flex h-screen`}>
-        <div id="sidebar" className="flex flex-col items-center w-24 border-r border-border px-4 py-6 gap-10">
-          <p id="logo" className="text-xs font-medium text-center py-2">
-            TaskiTasku
-          </p>
-
-          <button className="bg-slate-800 text-white size-10 hover:size-12 rounded-full hover:bg-slate-800/90 transition-all">
-            +
-          </button>
-          <ul id="color-blobs" className="flex flex-col items-center gap-4">
-            <li className="bg-amber-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-            <li className="bg-red-300 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-            <li className="bg-purple-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-            <li className="bg-blue-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-            <li className="bg-lime-300 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-            <li className="bg-gray-200 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
-          </ul>
-        </div>
-        <main className="flex flex-col flex-grow gap-10 py-6 px-12 w-full max-w-[calc(100%-6rem)]">
-          <div id="top-bar" className="flex flex-row justify-between">
-            <input type="text" />
-            <div className="size-8 bg-slate-200 rounded-full"></div>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`font-display antialiased flex h-screen`}>
+          <div id="sidebar" className="flex flex-col items-center w-24 border-r border-border px-4 py-6 gap-10">
+            <p id="logo" className="text-xs font-medium text-center py-2">
+              TaskiTasku
+            </p>
+            <button className="bg-slate-800 text-white size-10 hover:size-12 rounded-full hover:bg-slate-800/90 transition-all">
+              +
+            </button>
+            <ul id="color-blobs" className="flex flex-col items-center gap-4">
+              <li className="bg-amber-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+              <li className="bg-red-300 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+              <li className="bg-purple-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+              <li className="bg-blue-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+              <li className="bg-lime-300 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+              <li className="bg-gray-200 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
+            </ul>
           </div>
-
-          {children}
-        </main>
-      </body>
-    </html>
+          <main className="flex flex-col flex-grow gap-10 py-6 px-12 w-full max-w-[calc(100%-6rem)]">
+            <div id="top-bar" className="flex flex-row justify-between">
+              <input type="text" />
+              <SignedOut>
+                <SignInButton>
+                  <button className="text-xs bg-slate-200 hover:bg-slate-200/80 transition-all py-2 px-4 rounded-lg">
+                    Login
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+            {children}
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

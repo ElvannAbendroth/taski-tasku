@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 const tasks = [
   { id: 1, text: 'Something to do', done: false },
   { id: 2, text: 'Another little task', done: true },
