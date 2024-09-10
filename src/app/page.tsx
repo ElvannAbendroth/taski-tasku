@@ -1,12 +1,6 @@
 import { TaskGrid } from '@/components/TaskGrid'
 import { auth } from '@clerk/nextjs/server'
 
-export type Task = {
-  id: string
-  text: string
-  done: boolean
-}
-
 export default async function Home() {
   const { userId } = auth()
   const data = await fetch('http://localhost:3000/api/tasks')

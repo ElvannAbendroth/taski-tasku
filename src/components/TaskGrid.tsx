@@ -1,7 +1,8 @@
 'use client'
-import { Task } from '@/app/page'
+
 import { FC, useEffect, useState } from 'react'
 import { Button } from './ui/button'
+import { Task } from '@/lib/types'
 
 interface TaskGridProps {
   data: Task[]
