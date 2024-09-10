@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,9 +22,10 @@ export default function RootLayout({
             <p id="logo" className="text-xs font-medium text-center py-2">
               TaskiTasku
             </p>
-            <button className="bg-slate-800 text-white size-10 hover:size-12 rounded-full hover:bg-slate-800/90 transition-all">
+
+            <Button className=" size-10 hover:size-12 rounded-full transition-all" variant={'default'}>
               +
-            </button>
+            </Button>
             <ul id="color-blobs" className="flex flex-col items-center gap-4">
               <li className="bg-amber-400 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
               <li className="bg-red-300 size-4 rounded-full hover:size-5 transition-all cursor-pointer"></li>
