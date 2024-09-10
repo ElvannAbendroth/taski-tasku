@@ -1,23 +1,22 @@
 import { auth } from '@clerk/nextjs/server'
 
-const tasks = [
-  { id: 1, text: 'Something to do', done: false },
-  { id: 2, text: 'Another little task', done: true },
-  { id: 3, text: 'Do it in style', done: false },
-  { id: 4, text: 'DO THIS NOW', done: false },
-  { id: 5, text: 'for later', done: true },
-  { id: 6, text: 'Do me ;)', done: true },
-]
+export type Task = {
+  id: string
+  text: string
+  done: boolean
+}
 
-export default function Home() {
+export default async function Home() {
   const { userId } = auth()
+  const data = await fetch('http://localhost:3000/api/tasks')
+  const tasks = await data.json()
 
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-2xl font-bold">Tasks</h1>
       <div className="grid sm:grid-cols-3 gap-6">
         {userId &&
-          tasks.map(task => {
+          tasks.map((task: any) => {
             return (
               <div
                 className="flex flex-col p-6 bg-purple-300 rounded-2xl aspect-square text-sm gap-4 wrap"
