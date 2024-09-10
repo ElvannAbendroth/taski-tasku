@@ -3,7 +3,8 @@ import { auth } from '@clerk/nextjs/server'
 
 export default async function Home() {
   const { userId } = auth()
-  const data = await fetch('http://localhost:3000/api/tasks')
+  const data = await fetch(`http://${process.env.VERCEL_PROJECT_PRODUCTION_URL}/api/tasks/`)
+  if (!data?.ok) throw new Error('Error while fetching user from UserDataContext')
   const tasks = await data.json()
 
   return (
