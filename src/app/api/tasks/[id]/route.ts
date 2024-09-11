@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server'
+import { auth } from '@clerk/nextjs/server'
+import startDb from '@/lib/db'
+import Task from '@/models/taskModel'
 
 // Mock data: the list of tasks
 const tasks = [
@@ -24,4 +27,29 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
   // If task is found, return it as a JSON response
   return NextResponse.json(task)
+}
+
+export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
+  try {
+    // Verify authentication
+    const { userId } = auth()
+    if (!userId) {
+      return NextResponse.json({ error: 'Please Login!' }, { status: 401 })
+    }
+
+    // Connect to the database
+    await startDb()
+
+    // Find the task by id and delete it
+    const deletedTask = await Task.findOneAndDelete({ _id: params.id, clerkId: userId })
+
+    if (!deletedTask) {
+      return NextResponse.json({ error: 'Task not found or not authorized to delete' }, { status: 404 })
+    }
+
+    // Return success response
+    return NextResponse.json({ message: 'Task deleted successfully', taskId: params.id }, { status: 200 })
+  } catch (error) {
+    return NextResponse.json({ error: `Failed to delete task: ${error}` }, { status: 500 })
+  }
 }

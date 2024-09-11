@@ -8,10 +8,14 @@ import { useTasks } from '@/hooks/useTask'
 interface TaskGridProps {}
 
 export const TaskGrid: FC<TaskGridProps> = () => {
-  const { tasks, loading, markDone, deleteTask } = useTasks()
+  const { tasks, isLoading, markDone, deleteTask } = useTasks()
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading tasks...</div>
+  }
+
+  if (tasks.length === 0) {
+    return null
   }
 
   return (
@@ -29,6 +33,7 @@ export const TaskGrid: FC<TaskGridProps> = () => {
               }`}
             ></button>
             <p>{task.text}</p>
+
             <Button onClick={() => deleteTask(task.id)} size={'xs'} className="absolute bottom-0 right-0 m-3">
               delete
             </Button>

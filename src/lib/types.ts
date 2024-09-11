@@ -4,3 +4,5 @@ export type Task = {
   done: boolean
   clerkId: string
 }
+
+export type NewTask = Omit<Task, 'id' | 'done' | 'clerkId'>
