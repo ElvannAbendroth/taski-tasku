@@ -1,15 +1,6 @@
 import { Task as TaskDocument } from '@/lib/types'
 import { models, model, Schema } from 'mongoose'
 
-export interface LinkDocument extends Document {
-  user: string
-  title: string
-  href: string
-  isActive: boolean
-  id: string
-  isArchived: boolean
-}
-
 interface Methods {}
 
 const taskSchema = new Schema<TaskDocument, Methods>({
@@ -19,6 +10,11 @@ const taskSchema = new Schema<TaskDocument, Methods>({
   },
   done: {
     type: Boolean,
+    required: true,
+  },
+  clerkId: {
+    type: String,
+    required: true,
   },
 })
 
